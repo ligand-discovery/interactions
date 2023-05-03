@@ -10,7 +10,7 @@ import sys
 
 # relative imports
 ROOT = os.path.abspath(os.path.dirname(__file__))
-sys.path.append(os.path.join(ROOT, "../screeningApp/src/"))
+sys.path.append(os.path.join(ROOT, "./src/"))
 from agstyler import PINLEFT, PRECISION_TWO, draw_grid
 
 st.set_page_config(
@@ -37,7 +37,7 @@ hide_streamlit_style = """
             """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
-pIdDf = pd.read_csv(os.path.join(ROOT, "../data/general/proteinNames.tsv"), sep="\t")
+pIdDf = pd.read_csv(os.path.join(ROOT, "./data/proteinNames.tsv"), sep="\t")
 
 pId = pIdDf['UniProtID'].values
 pIdDes = pIdDf['Description'].values
@@ -107,8 +107,8 @@ pIdIndex = st.sidebar.selectbox(label = "Select Protein", help = help_input3, op
 
 myPid = pId[pIdIndex]
 
-intDfOri = pd.read_csv(os.path.join(ROOT, "../data/general/finalScreen.tsv"), sep="\t")
-fpDf = pd.read_csv(os.path.join(ROOT, "../data/general/finalFp.tsv"), sep="\t")
+intDfOri = pd.read_csv(os.path.join(ROOT, "./data/finalScreen.tsv"), sep="\t")
+fpDf = pd.read_csv(os.path.join(ROOT, "./data/finalFp.tsv"), sep="\t")
 intDf = intDfOri[intDfOri["accession"]==myPid]
 
 if len(intDf) == 0:
@@ -177,7 +177,7 @@ else:
     }
     data = draw_grid(intDf, formatter=formatter, fit_columns=True, selection='none', max_height=340)
   with col5:
-    st.image(os.path.join(ROOT, "../assets/proteinCentric/") + myPid + ".png")
+    st.image(os.path.join(ROOT, "./assets/proteinCentric/") + myPid + ".png")
     
   fragId = st.sidebar.selectbox(label = "Select Gen1 Ligand", options = intDf["fragId"])
   intDf2 = intDfOri[intDfOri["fragId"]==fragId]
@@ -211,7 +211,7 @@ else:
   
   col6, col7  = st.columns(2)
   with col6:
-    st.image(os.path.join(ROOT, "../assets/ligandVolcanoPlots/") + fragId + ".png")
+    st.image(os.path.join(ROOT, "./assets/ligandVolcanoPlots/") + fragId + ".png")
   with col7:
     if len(tempDf2.index) == 0:
       st.write("**:red[No]** data to display with selected filters. Applied **:blue[no filter]**")
@@ -299,7 +299,7 @@ else:
 
     # gen2Id = st.sidebar.selectbox(label = "Select Gen2 Ligand", options = temp4Df["fragId"])
     gen2Id = st.sidebar.selectbox(label = "Select Gen2 Ligand", options = sideBarList)
-    st.sidebar.image(os.path.join(ROOT, "../assets/fragFiguresSingle/") + gen2Id + ".png")
+    st.sidebar.image(os.path.join(ROOT, "./assets/fragFiguresSingle/") + gen2Id + ".png")
     
 ############ Elaborates Ligand Centric View ##########################      
 
@@ -350,4 +350,4 @@ else:
       data = draw_grid(
         gen2Df2, formatter=formatter, fit_columns=True, selection='none', max_height=340)
     with col9:
-      st.image(os.path.join(ROOT, "../assets/gen2VolcanoPlots/") + gen2Id + ".png")
+      st.image(os.path.join(ROOT, "./assets/gen2VolcanoPlots/") + gen2Id + ".png")
